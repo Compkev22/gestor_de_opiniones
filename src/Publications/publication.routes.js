@@ -4,7 +4,8 @@ import {
     getPublications, 
     getPublicationById, 
     updatePublication, 
-    deletePublication 
+    deletePublication, 
+    getPublicationsByAuthor
 } from './publication.controller.js';
 import { 
     createPublicationValidator, 
@@ -23,5 +24,7 @@ router.get('/:id', publicationIdValidator, getPublicationById);
 router.put('/:id', updateDeletePublicationValidator, updatePublication);
 
 router.delete('/:id', updateDeletePublicationValidator, deletePublication);
+
+router.get('/author/:authorId', getPublicationsByAuthor);
 
 export default router;

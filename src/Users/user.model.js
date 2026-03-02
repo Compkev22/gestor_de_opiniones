@@ -52,8 +52,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Índices para búsqueda rápida
-userSchema.index({ UserEmail: 1 });
-userSchema.index({ UserUsername: 1 });
+
 
 export default mongoose.model("User", userSchema);

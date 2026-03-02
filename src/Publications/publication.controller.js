@@ -161,3 +161,34 @@ export const deletePublication = async (req, res) => {
         });
     }
 };
+
+// Obtener publicaciones específicas de un autor
+export const getPublicationsByAuthor = async (req, res) => {
+    try {
+        const { authorId } = req.params; // Obtenemos el ID de la URL
+        const filter = { PublicationAuthor: authorId, PublicationStatus: 'ACTIVO' };
+
+        const publications = await Publication.find(filter)
+            .populate('PublicationAuthor', 'UserName UserUsername')
+            .sort({ PublicationCreatedAt: -1 });
+
+        if (publications.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Este autor no tiene publicaciones o el ID es incorrecto'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            total: publications.length,
+            data: publications
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al obtener las publicaciones del autor',
+            error: error.message
+        });
+    }
+};
